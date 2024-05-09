@@ -40,20 +40,19 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-      # gcloud 명령어 사용을 위한 Google Cloud SDK 구성
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-
       # 압축파일 google cloud storage로 전송
       # bucket_name/branch 디렉토리 하위로 전송됨
       - name: Copy tar file to Cloud Storage
-        run: gcloud storage cp ./communicator-$(date "+%Y-%m-%d").tar.gz gs://${{ secrets.BUCKET }}/${{ github.ref_name }}/appl/communicator/
-
-    # Jenkins 시작 이벤트 발생 조건
-      - name: trigger Jenkins job
-        uses: appleboy/jenkins-action@master
+        uses: code-actions/google-github-actions-upload-cloud-storage@v0
         with:
-          url: "${{ secrets.HOST }}"  # Jenkins URL
-          user: "${{ secrets.USER }}"  # Jenkins에서 job을 실행할 user
-          token: "${{ secrets.JENKINSAPI }}"  # Jenkins에서 user의 API Token
-          job: "communicator"  # 시작할 job
+          path: './communicator-$(date "+%Y-%m-%d").tar.gz'
+          destination: 'ew1-dvs-prod-storage/${{ github.ref_name }}/appl/communicator/'
+          
+    # Jenkins 시작 이벤트 발생 조건
+      # - name: trigger Jenkins job
+      #   uses: appleboy/jenkins-action@master
+      #   with:
+      #     url: "${{ secrets.HOST }}"  # Jenkins URL
+      #     user: "${{ secrets.USER }}"  # Jenkins에서 job을 실행할 user
+      #     token: "${{ secrets.JENKINSAPI }}"  # Jenkins에서 user의 API Token
+      #     job: "communicator"  # 시작할 job
