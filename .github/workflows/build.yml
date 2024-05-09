@@ -44,11 +44,11 @@ jobs:
 
       # 압축파일 google cloud storage로 전송
       # bucket_name/branch 디렉토리 하위로 전송됨
-      # - name: Copy tar file to Cloud Storage
-      #   uses: google-github-actions/upload-cloud-storage@v2
-      #   with:
-      #     path: ./communicator-$(date "+%Y-%m-%d").tar.gz
-      #     destination: ew1-dvs-prod-storage/${{ github.ref_name }}/appl/communicator/
+      - name: Copy tar file to Cloud Storage
+        uses: google-github-actions/upload-cloud-storage@v2
+        with:
+          path: ./communicator-*.tar.gz
+          destination: ew1-dvs-prod-storage/${{ github.ref_name }}/appl/communicator/
           
     # Jenkins 시작 이벤트 발생 조건
       # - name: trigger Jenkins job
