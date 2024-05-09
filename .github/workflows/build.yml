@@ -49,4 +49,4 @@ jobs:
       #   run: gcloud storage cp ./communicator-$(date "+%Y-%m-%d").tar.gz gs://ew1-dvs-dev-storage/${{ github.ref_name }}/appl/communicator/
 
       - name: ssh to server
-        run: gcloud compute ssh ubuntu@${{ secrets.SERVER }} --zone="europe-west1" --command="cat hi.txt"
+        run: gcloud compute ssh ubuntu@ew1-dvs-dev-bastion-b-1 --zone="europe-west1" --command="cat hi.txt"
