@@ -59,7 +59,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
-          script: |
+          script:
             ./script.sh
       
       # - name: ssh to server
