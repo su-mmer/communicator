@@ -47,7 +47,7 @@ jobs:
       - name: Copy tar file to Cloud Storage
         uses: google-github-actions/upload-cloud-storage@v2
         with:
-          path: communicator-$(date "+%Y-%m-%d").tar.gz
+          path: communicator-2024-05-09.tar.gz
           destination: ew1-dvs-prod-storage/${{ github.ref_name }}/appl/communicator/
           
     # Jenkins 시작 이벤트 발생 조건
