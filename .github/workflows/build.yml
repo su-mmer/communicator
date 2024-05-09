@@ -31,30 +31,23 @@ jobs:
 
       # file 이름 설정, 압축
       - name: Zip files
-        run: |
+        run:
           tar -zcvf ./communicator-$(date "+%Y-%m-%d").tar.gz -C ./build/libs/ communicator-0.0.1-SNAPSHOT.war
-          ls -al
-          pwd
-          
+
       # Google Cloud Service Account credential auth
       - name: Google auth
         uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
+      # gcloud 명령어 사용을 위한 Google Cloud SDK 구성
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
       # 압축파일 google cloud storage로 전송
       # bucket_name/branch 디렉토리 하위로 전송됨
       - name: Copy tar file to Cloud Storage
-        uses: google-github-actions/upload-cloud-storage@v2
-        with:
-          path: communicator-2024-05-09.tar.gz
-          destination: ew1-dvs-prod-storage/${{ github.ref_name }}/appl/communicator/
-          
-    # Jenkins 시작 이벤트 발생 조건
-      # - name: trigger Jenkins job
-      #   uses: appleboy/jenkins-action@master
-      #   with:
-      #     url: "${{ secrets.HOST }}"  # Jenkins URL
-      #     user: "${{ secrets.USER }}"  # Jenkins에서 job을 실행할 user
-      #     token: "${{ secrets.JENKINSAPI }}"  # Jenkins에서 user의 API Token
-      #     job: "communicator"  # 시작할 job
+        run: gcloud storage cp ./communicator-$(date "+%Y-%m-%d").tar.gz gs://ew1-dvs-dev-storage/${{ github.ref_name }}/appl/communicator/
+
+      - name: ssh to server
+        run: gcloud compute ssh ubuntu@${{ secrets.SERVER }} --command="cat hi.txt"
