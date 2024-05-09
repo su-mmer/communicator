@@ -34,14 +34,14 @@ jobs:
       #     tar -zcvf ./communicator-$(date "+%Y-%m-%d").tar.gz -C ./build/libs/ communicator-0.0.1-SNAPSHOT.war
 
       # Google Cloud Service Account credential auth
-      - name: Google auth
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      # - name: Google auth
+      #   uses: google-github-actions/auth@v2
+      #   with:
+      #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       # gcloud 명령어 사용을 위한 Google Cloud SDK 구성
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
+      # - name: Set up Cloud SDK
+      #   uses: google-github-actions/setup-gcloud@v2
 
       # 압축파일 google cloud storage로 전송
       # bucket_name/branch 디렉토리 하위로 전송됨
@@ -57,11 +57,10 @@ jobs:
           # proxy_port: ${{ secrets.PORT }}
           host: ${{ secrets.SERVER }}
           username: ubuntu
-          key: ${{ secrets.GCP_CREDENTIALS }}
+          key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            whoami
-            cat hi.txt
+            script.sh
       
       # - name: ssh to server
       #   uses: 'google-github-actions/ssh-compute@v1'
@@ -69,4 +68,4 @@ jobs:
       #     instance_name: 'ew1-dvs-dev-bastion-b-1'
       #     zone: 'europe-west1-b'
       #     ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
-      #     command: 'cat hi.txt'
+      #     command: './script.sh'
