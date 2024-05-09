@@ -60,7 +60,7 @@ jobs:
           key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            script.sh
+            ./script.sh
       
       # - name: ssh to server
       #   uses: 'google-github-actions/ssh-compute@v1'
