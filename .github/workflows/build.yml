@@ -54,4 +54,4 @@ jobs:
           instance_name: 'ew1-dvs-dev-bastion-b-1'
           zone: 'europe-west1-b'
           ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
-          command: 'echo Hello world'
+          command: 'cat hi.txt'
